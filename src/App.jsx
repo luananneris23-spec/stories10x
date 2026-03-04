@@ -593,75 +593,81 @@ function AIGerarComunidade({ userData, onAplicar, onClose }) {
     setLoading(true);setErro("");setResult(null);
     try {
       const sys=buildSystemPrompt(userData);
-      const prompt=`Você vai criar uma sequência de stories para o seguinte contexto:
+      const prompt=`Crie uma sequência de stories para este contexto:
 
 TIPO: ${form.tipo}
 PRODUTO/SERVIÇO: ${form.produto||"não informado"}
-OBJETIVO DESTA SEQUÊNCIA: ${form.objetivo||"engajar e gerar inbox qualificado"}
+OBJETIVO: ${form.objetivo||"engajar e gerar inbox qualificado"}
 NICHO: ${userData?.nicho||"não informado"}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━
-ANTES DE ESCREVER, DECIDA:
+REGRAS ABSOLUTAS
 ━━━━━━━━━━━━━━━━━━━━━━━━
 
-1. QUAL É O FIO NARRATIVO?
-Uma única pergunta ou tensão que amarra todos os stories. A audiência precisa sentir que se sair no meio perde a resposta. Defina isso primeiro — é o esqueleto da sequência inteira.
+PROIBIDO INVENTAR DADOS:
+Nunca cite estudos, pesquisas, universidades ou estatísticas a menos que sejam fatos amplamente conhecidos e verificáveis. Se não tiver certeza absoluta, não use. Substitua por: experiência do criador, depoimento de cliente, situação real do nicho, observação do cotidiano.
 
-2. QUANTOS STORIES ESTA SEQUÊNCIA PRECISA?
-Não existe número fixo. Decida com base no tipo:
-- Engajamento puro ou caixinha: 8 a 12 stories bem executados valem mais que 15 mediocres
-- Venda direta: 12 a 16 para construir contexto antes do link
-- Aquecimento ou consciência de produto: 8 a 10 stories com fio narrativo forte
-- Use a quantidade certa. Menos é mais quando cada story tem propósito claro.
-
-3. QUAL É O ARCO EMOCIONAL?
-Cada sequência percorre um caminho emocional. Escolha o arco que faz sentido para este tipo:
-- Curiosidade → revelação → identificação → ação
-- Identificação positiva → tensão → transformação → inspiração
-- Provocação → reflexão → prova → convite
-Não misture arcos. Um arco bem executado é mais poderoso que vários fragmentados.
+QUANTIDADE CERTA, NÃO QUANTIDADE MÁXIMA:
+- Engajamento puro / caixinha: 6 a 10 stories
+- Venda direta: 8 a 12 stories
+- Aquecimento: 6 a 9 stories
+Pare quando a sequência estiver completa. Não encha para bater número.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━
-COMO CONSTRUIR CADA STORY:
+COMO PENSAR ESTA SEQUÊNCIA
 ━━━━━━━━━━━━━━━━━━━━━━━━
 
-Cada story tem UMA função dentro do arco. Antes de escrever, saiba:
-- Qual estado emocional este story instala na audiência?
-- O que o story anterior deixou em aberto que este resolve ou aprofunda?
-- O que este story deixa em aberto para puxar ao próximo?
+Defina ANTES de escrever o primeiro story:
 
-VARIEDADE DE ABORDAGEM — nunca dois stories seguidos com o mesmo tipo:
-• Enquete / pergunta polarizadora
-• Afirmação direta que provoca reação
-• Situação de identificação do cotidiano (leve, sem drama)
-• Dado ou fato surpreendente apresentado como revelação
-• História pessoal com gancho (fragmentada — não conta tudo de uma vez)
-• Print de resultado ou depoimento comentado com emoção genuína
-• Humor: situação constrangedora real do nicho
-• Conteúdo técnico emocionalizado (dado + "isso me impactou porque...")
-• Provocação inteligente: crença comum que merece ser questionada
-• CTA de triagem antes de revelar algo importante
+1. FIO NARRATIVO: qual é a tensão ou pergunta central que amarra tudo? A pessoa precisa sentir que se sair no meio perde a resposta ou a virada.
 
-EQUILÍBRIO EMOCIONAL — dor é uma ferramenta, não o tema:
-Use no máximo 30% dos stories em território de dificuldade/tensão.
-O restante deve circular por: leveza, curiosidade, conquista, possibilidade, identificação positiva, humor, revelação.
+2. VIRADA: toda boa sequência tem uma virada — um momento onde a percepção muda. Ex: "você acha que é questão de preço... mas olha esse print de cliente". Onde fica a virada nesta sequência?
 
-STORY 1: sempre Enquete com Intenção, Resposta Inbox ou Caixinha.
-LINKS DE VENDA (se aplicável): cada aparição com ângulo diferente — nunca o mesmo texto duas vezes.
-VOZ: humana, direta, como o criador realmente fala. Sem copy de agência.
+3. ARCO: escolha um e execute até o fim:
+   → Curiosidade › revelação › identificação › ação
+   → Identificação positiva › tensão › virada › transformação
+   → Provocação › reflexão › prova concreta › convite
 
 ━━━━━━━━━━━━━━━━━━━━━━━━
-FORMATO DE RESPOSTA:
+COMO ESCREVER CADA STORY
 ━━━━━━━━━━━━━━━━━━━━━━━━
+
+Cada story tem UMA função. Antes de escrever, responda:
+— O que este story faz que o anterior não fez?
+— O que ele deixa em aberto para puxar ao próximo?
+
+SEJA ESPECÍFICO E OPERACIONAL:
+Não escreva "mostre um depoimento". Escreva "pegue o print da cliente X dizendo Y e escreva por cima: isso mudou quando ela parou de fazer Z".
+Não escreva "use humor". Escreva a situação engraçada real do nicho.
+Não escreva "adicione um CTA". Escreva exatamente o que a pessoa deve falar e o que o seguidor deve fazer.
+
+VARIEDADE OBRIGATÓRIA — nunca dois stories seguidos com a mesma estrutura:
+• Enquete que polariza (duas opções onde a pessoa TEM curiosidade do resultado)
+• Afirmação direta + reação esperada da audiência
+• Situação real e específica do nicho que gera identificação imediata
+• História pessoal com gancho — não conta tudo, termina com "mas antes preciso te contar..."
+• Print ou depoimento real comentado com emoção genuína do criador
+• Situação engraçada ou constrangedora específica deste nicho
+• Virada de percepção: "você provavelmente pensa X... mas na verdade é Y"
+• Prova concreta: antes/depois, resultado real, transformação de cliente
+• CTA de triagem: reação/emoji antes de revelar algo importante
+
+EQUILÍBRIO:
+Máximo 30% dos stories com tom de dificuldade ou tensão.
+O resto: leveza, curiosidade, conquista, identificação positiva, virada, prova.
+
+Story 1: sempre Enquete com Intenção, Resposta Inbox ou Caixinha.
+Links de venda: cada aparição com ângulo diferente, nunca o mesmo texto.
+Voz: direta, humana, como o criador fala — sem copy de agência, sem rótulos genéricos.
 
 Responda SOMENTE com JSON válido:
 {
-  "nome": "nome que revela o fio narrativo desta sequência específica",
+  "nome": "nome que revela o fio narrativo e a virada desta sequência",
   "recados": [
     {
-      "mec": "nome exato do mecanismo da lista",
-      "cta": "CTA específico para este story",
-      "ideia": "primeira linha que para o polegar | o que desenvolver e como (tom, ângulo, o que deixar em aberto) | como pedir a ação de forma natural"
+      "mec": "nome exato do mecanismo",
+      "cta": "CTA específico e operacional",
+      "ideia": "primeira frase exata que para o polegar | o que desenvolver, como e com que tom — seja específico para este nicho | instrução exata de como pedir a ação"
     }
   ]
 }
