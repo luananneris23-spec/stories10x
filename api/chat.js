@@ -83,10 +83,10 @@ export default async function handler(req, res) {
         Authorization: "Bearer " + process.env.OPENAI_API_KEY,
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "gpt-4o",
         messages,
-        max_tokens: 2500,
-        temperature: 0.7,
+        max_tokens: 4000,
+        temperature: 0.8,
       }),
     });
 
