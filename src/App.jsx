@@ -146,7 +146,7 @@ ANTI-REPETIÇÃO: REGRA CRÍTICA
 
 Os mecanismos mais usados pelo usuário são: ${mecsFav}
 
-NUNCA use esses mecanismos mais de 2 vezes em uma sequência de 15 recados.
+NUNCA use esses mecanismos mais de 2 vezes em uma mesma sequência.
 SEMPRE priorize mecanismos que o usuário ainda não usa: ${mecsPouco.slice(0,6).join(", ")||"varie sempre"}.
 
 Uma sequência vencedora tem variedade. O Leandro Ladeira mesmo diz: "você não precisa usar todos os dispositivos — mas os que usar, use com intensidade. E troque para a audiência não enjoar."
@@ -265,7 +265,7 @@ REGRAS OBRIGATÓRIAS DO MÉTODO
 1. O 1º story SEMPRE tem CTA de engajamento: Resposta Inbox, Enquete ou Caixinha
 2. Mínimo 5 mecanismos DIFERENTES por comunidade
 3. Mínimo 5 CTAs ativos por comunidade
-4. Mínimo 15 recados (stories) por comunidade
+4. Quantidade de stories: use quantos forem necessários para a sequência ter sentido e fluir bem — nem mais, nem menos. Qualidade e coerência narrativa valem mais do que número.
 5. Cada story tem pelo menos 1 mecanismo — nunca deixe stories "vazios"
 6. Nunca mais de 3 stories de venda seguidos sem intercalar conexão/engajamento
 7. Link de vendas converte muito mais com contexto: ideal colocar após 3-5 stories de conversa
@@ -590,7 +590,7 @@ function AIGerarComunidade({ userData, onAplicar, onClose }) {
         (userData.seqs||[]).forEach(s=>(s.stories||[]).forEach(r=>{ if(r.mec) topMecs[r.mec]=(topMecs[r.mec]||0)+1; }));
         return Object.entries(topMecs).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([m])=>m);
       })();
-      const prompt=`Gere uma comunidade de stories completa com EXATAMENTE 15 recados para um criador de conteúdo brasileiro.
+      const prompt=`Gere uma sequência de stories para um criador de conteúdo brasileiro usando o método STV.
 
 DADOS DA SEQUÊNCIA:
 - Tipo: ${form.tipo}
@@ -599,15 +599,22 @@ DADOS DA SEQUÊNCIA:
 - Objetivo: ${form.objetivo||"gerar vendas"}
 - Mecanismos que este usuário JÁ usa demais (EVITE ou use no máximo 1x): ${mecsMaisUsados.join(", ")||"nenhum"}
 
+QUANTIDADE DE STORIES:
+Use quantos stories forem necessários para a sequência ter início, meio e fim com sentido narrativo completo. Pode ser 8, 10, 12, 15 — o que a história pedir. Não encha por encher. Não corte se ainda não chegou na venda.
+
+ARCO NARRATIVO OBRIGATÓRIO:
+A sequência deve funcionar como uma história com fio condutor. Cada story deve surgir naturalmente do anterior — o seguidor que assistiu o story anterior entende por que este veio agora. Siga este arco:
+1. GANCHO (1-2 stories): identificação imediata + CTA de engajamento. A pessoa para e pensa "esse sou eu".
+2. DESENVOLVIMENTO (3-5 stories): aprofunda o tema, cria vínculo emocional, traz vulnerabilidade ou história real. O seguidor começa a mandar inbox espontaneamente.
+3. VIRADA (2-3 stories): entrega de valor real, prova social, resultado concreto. A transformação se torna tangível.
+4. CONDUÇÃO (1-3 stories): caminho natural para a ação. A venda é consequência óbvia do contexto — não um anúncio.
+
 INSTRUÇÕES CRÍTICAS:
-1. O campo "ideia" deve ser o ROTEIRO COMPLETO e pronto para postar — exatamente o texto que o criador vai escrever ou falar no story. Não uma descrição do que fazer. Escreva na 1ª pessoa, com a voz do criador, usando a linguagem do nicho.
-2. Cada story deve ser diferente em tom e abordagem — não repita a mesma estrutura.
-3. Stories 1-3: identifação + curiosidade + CTA imediato. Use urgência oculta específica do nicho.
-4. Stories 4-7: história pessoal, vulnerabilidade, conexão emocional profunda.
-5. Stories 8-12: conteúdo de valor + prova social (print de cliente, resultado real).
-6. Stories 13-15: condução suave para ação — o contexto já foi construído.
-7. VARIEDADE OBRIGATÓRIA: use no mínimo 10 mecanismos DIFERENTES nos 15 stories.
-8. Mecanismos a PRIORIZAR por serem menos usados: ${MECANISMOS.filter(m=>!mecsMaisUsados.includes(m.nome)).slice(0,8).map(m=>m.nome).join(", ")||"todos disponíveis"}
+1. O campo "ideia" é o ROTEIRO COMPLETO pronto para postar — texto na 1ª pessoa, voz do criador, 2-4 frases. Não descreva, escreva.
+2. Cada story deve ter tom e abordagem diferentes do anterior — sem repetir estrutura.
+3. VARIEDADE OBRIGATÓRIA: mínimo 8 mecanismos diferentes na sequência inteira.
+4. Mecanismos a PRIORIZAR: ${MECANISMOS.filter(m=>!mecsMaisUsados.includes(m.nome)).slice(0,8).map(m=>m.nome).join(", ")||"todos disponíveis"}
+5. A transição entre stories deve ser fluida — o último story de cada fase prepara o seguidor para a próxima.
 
 Responda SOMENTE com JSON válido neste formato:
 {
@@ -616,13 +623,13 @@ Responda SOMENTE com JSON válido neste formato:
     {
       "mec": "nome exato do mecanismo da lista",
       "cta": "um dos CTAs válidos",
-      "ideia": "ROTEIRO COMPLETO: texto pronto para postar, na voz do criador, 2-4 frases curtas e poderosas. Específico para o nicho '${userData.nicho||"informado"}'."
+      "ideia": "roteiro completo, na voz do criador, pronto para postar"
     }
   ]
 }
 
 CTAs válidos: ${CTAS.join(", ")}
-Regra de ouro: 1º story DEVE ter Resposta Inbox, Enquete ou Caixinha. O texto deve soar como uma pessoa real falando, não como um coach genérico.`;
+Regra de ouro: 1º story DEVE ter Resposta Inbox, Enquete ou Caixinha.`;
 
       const txt=await callAI(sys,prompt,userData.userId);
       const data=parseJSON(txt);
@@ -639,7 +646,7 @@ Regra de ouro: 1º story DEVE ter Resposta Inbox, Enquete ou Caixinha. O texto d
         <div className="mb">
           {!result&&(
             <>
-              <div className="aib">✨ A IA vai criar uma comunidade completa de 15 recados, já com mecanismos, CTAs e roteiro, personalizada para o seu nicho e produto!</div>
+              <div className="aib">✨ A IA vai criar uma sequência completa com arco narrativo, mecanismos, CTAs e roteiro prontos — personalizada para o seu nicho e produto!</div>
               <div className="fg"><label className="fl">Tipo da comunidade</label><select className="fs" value={form.tipo} onChange={e=>setForm(f=>({...f,tipo:e.target.value}))}>{TIPOS_COM.map(t=><option key={t}>{t}</option>)}</select></div>
               <div className="fg"><label className="fl">Produto ou serviço que vai vender</label><input className="fi" placeholder="Ex: Mentoria de tráfego pago, Curso de confeitaria..." value={form.produto} onChange={e=>setForm(f=>({...f,produto:e.target.value}))}/></div>
               <div className="fg"><label className="fl">Objetivo principal</label><input className="fi" placeholder="Ex: Gerar leads qualificados, vender ingresso do evento..." value={form.objetivo} onChange={e=>setForm(f=>({...f,objetivo:e.target.value}))}/></div>
@@ -936,7 +943,7 @@ function ComDetail({ com, setSeqs, prods, userData, onBack }) {
           )}
           {tab==="recados"&&(
             <div>
-              {!ok&&<div className="wb">⚠ <strong>Critérios não atingidos:</strong><ul>{!f1ok&&<li>1º story: Resposta Inbox, Enquete ou Caixinha</li>}{m5<5&&<li>Mínimo 5 mecanismos ({m5} agora)</li>}{c5<5&&<li>Mínimo 5 CTAs ({c5} agora)</li>}{st.length<15&&<li>Mínimo 15 stories ({st.length} agora)</li>}</ul></div>}
+              {!ok&&<div className="wb">⚠ <strong>Critérios não atingidos:</strong><ul>{!f1ok&&<li>1º story: Resposta Inbox, Enquete ou Caixinha</li>}{m5<5&&<li>Mínimo 5 mecanismos ({m5} agora)</li>}{c5<5&&<li>Mínimo 5 CTAs ({c5} agora)</li>}</ul></div>}
               {ok&&<div className="ob">✔ Comunidade no padrão! Hora de publicar! 🚀</div>}
               <div style={{display:"flex",justifyContent:"flex-end",gap:6,marginBottom:7}}>
                 <button className="btn bgn" onClick={addR}>+ Novo story</button>
@@ -1095,7 +1102,7 @@ function Home({ seqs, prods, ideas, setPage, session, setData, userData }) {
         </div>
         <div className="box">
           <div className="bh or">📖 Critérios</div>
-          <div className="bb" style={{fontSize:11,lineHeight:1.7,color:"#444"}}><div>✔ 1º story: CTA engajamento</div><div>✔ Mínimo 5 mecanismos</div><div>✔ Mínimo 5 CTAs</div><div>✔ Mínimo 15 stories</div></div>
+          <div className="bb" style={{fontSize:11,lineHeight:1.7,color:"#444"}}><div>✔ 1º story: CTA engajamento</div><div>✔ Mínimo 5 mecanismos</div><div>✔ Mínimo 5 CTAs</div></div>
         </div>
       </aside>
       <div className="ct">
