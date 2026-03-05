@@ -286,13 +286,14 @@ Quando escrever roteiros, escreva como o PRÓPRIO criador de conteúdo falaria �
 // ─── CHAVE DA API OPENAI ─────────────────────────────────────────────────────
 // IMPORTANTE: Substitua pela sua chave em https://platform.openai.com/api-keys
 // Para produção, use uma variável de ambiente — nunca exponha a chave publicamente
-async function callAI(systemPrompt, userPrompt) {
+async function callAI(systemPrompt, userPrompt, userId) {
   const res = await fetch("/api/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
+      user_id: userId || "guest",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
@@ -623,7 +624,7 @@ Responda SOMENTE com JSON válido neste formato:
 CTAs válidos: ${CTAS.join(", ")}
 Regra de ouro: 1º story DEVE ter Resposta Inbox, Enquete ou Caixinha. O texto deve soar como uma pessoa real falando, não como um coach genérico.`;
 
-      const txt=await callAI(sys,prompt);
+      const txt=await callAI(sys,prompt,userData.userId);
       const data=parseJSON(txt);
       if(!data||!data.recados) throw new Error("Resposta inválida da IA");
       setResult(data);
@@ -713,7 +714,7 @@ Responda SOMENTE com JSON:
     }
   ]
 }`;
-      const txt=await callAI(sys,prompt);
+      const txt=await callAI(sys,prompt,userData.userId);
       const data=parseJSON(txt);
       if(!data?.sugestoes) throw new Error("Resposta inválida");
       setSugestoes(data.sugestoes);
@@ -787,7 +788,7 @@ Responda SOMENTE com JSON:
     }
   ]
 }`;
-      const txt=await callAI(sys,prompt);
+      const txt=await callAI(sys,prompt,userData.userId);
       const data=parseJSON(txt);
       if(!data?.ideias) throw new Error("Resposta inválida");
       setIdeias(data.ideias);
@@ -1162,7 +1163,7 @@ function UserApp({ session, onLogout }) {
   const setProds=fn=>setData(d=>({...d,prods:typeof fn==="function"?fn(d.prods):fn}));
   const setIdeas=fn=>setData(d=>({...d,ideas:typeof fn==="function"?fn(d.ideas):fn}));
   const nav=[["home","🏠","Início"],["comunidades","📱","Comunidades"],["mecanismos","⚙","Mecanismos"],["vitrine","🛍️","Produtos"],["mural","📌","Mural"]];
-  const userData={nicho:data.nicho,prods:data.prods,seqs:data.seqs};
+  const userData={nicho:data.nicho,prods:data.prods,seqs:data.seqs,userId:session.userId};
   return (
     <>
       <style>{CSS}</style>
