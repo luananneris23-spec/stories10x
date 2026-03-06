@@ -68,8 +68,28 @@ function pwdGen(n) { return n.toLowerCase().replace(/\s+/g,"").slice(0,5)+Math.f
 // ─── STORAGE ─────────────────────────────────────────────────────────────────
 function getUsers()         { try { return JSON.parse(localStorage.getItem("stv_users")||"[]"); } catch { return []; } }
 function saveUsers(u)       { localStorage.setItem("stv_users",JSON.stringify(u)); }
-function getUserData(id)    { try { return JSON.parse(localStorage.getItem("stv_d_"+id)||"{}"); } catch { return {}; } }
-function saveUserData(id,d) { localStorage.setItem("stv_d_"+id,JSON.stringify(d)); }
+function getUserDataLocal(id)    { try { return JSON.parse(localStorage.getItem("stv_d_"+id)||"{}"); } catch { return {}; } }
+function saveUserDataLocal(id,d) { localStorage.setItem("stv_d_"+id,JSON.stringify(d)); }
+async function loadUserDataRemote(id) {
+  try {
+    const res = await fetch("/api/load-data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: id })
+    });
+    const json = await res.json();
+    return json.data || null;
+  } catch { return null; }
+}
+async function saveUserDataRemote(id, d) {
+  try {
+    await fetch("/api/save-data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: id, data: d })
+    });
+  } catch { /* silencioso */ }
+}
 function getSession()       {
   try {
     const s=JSON.parse(localStorage.getItem("stv_sess")||"null");
@@ -1164,13 +1184,32 @@ function Home({ seqs, prods, ideas, setPage, session, setData, userData }) {
 // ─── USER APP ─────────────────────────────────────────────────────────────────
 function UserApp({ session, onLogout }) {
   const [page,setPage]=useState("home");
-  const [data,setDataRaw]=useState(()=>{const d=getUserData(session.userId);return{seqs:[],prods:[],ideas:[],nicho:"",...d};});
-  const setData=fn=>{setDataRaw(prev=>{const next=typeof fn==="function"?fn(prev):fn;saveUserData(session.userId,next);return next;});};
+  const [syncing,setSyncing]=useState(true);
+  const [data,setDataRaw]=useState(()=>{const d=getUserDataLocal(session.userId);return{seqs:[],prods:[],ideas:[],nicho:"",...d};});
+
+  // Carrega dados do Supabase ao entrar
+  useEffect(()=>{
+    loadUserDataRemote(session.userId).then(remote=>{
+      if(remote){
+        setDataRaw({seqs:[],prods:[],ideas:[],nicho:"",...remote});
+        saveUserDataLocal(session.userId,remote);
+      }
+      setSyncing(false);
+    });
+  },[]);
+
+  const setData=fn=>{setDataRaw(prev=>{
+    const next=typeof fn==="function"?fn(prev):fn;
+    saveUserDataLocal(session.userId,next);
+    saveUserDataRemote(session.userId,next);
+    return next;
+  });};
   const setSeqs =fn=>setData(d=>({...d,seqs: typeof fn==="function"?fn(d.seqs):fn}));
   const setProds=fn=>setData(d=>({...d,prods:typeof fn==="function"?fn(d.prods):fn}));
   const setIdeas=fn=>setData(d=>({...d,ideas:typeof fn==="function"?fn(d.ideas):fn}));
   const nav=[["home","🏠","Início"],["comunidades","📱","Comunidades"],["mecanismos","⚙","Mecanismos"],["vitrine","🛍️","Produtos"],["mural","📌","Mural"]];
   const userData={nicho:data.nicho,prods:data.prods,seqs:data.seqs,userId:session.userId};
+  if(syncing) return <><style>{CSS}</style><div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",background:"#c0d8f0"}}><div style={{background:"#fff",borderRadius:6,padding:"24px 32px",boxShadow:"0 2px 12px rgba(0,40,100,.15)",textAlign:"center",color:"#336699",fontSize:13}}><div style={{fontSize:22,marginBottom:8}}>☁️</div>Carregando seus dados...</div></div></>;
   return (
     <>
       <style>{CSS}</style>
