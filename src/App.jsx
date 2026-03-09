@@ -323,14 +323,18 @@ async function callAI(systemPrompt, userPrompt, userId) {
   });
 
   if (!res.ok) {
-    const err = await res.json().catch(() => ({
-      error: { message: res.statusText }
-    }));
-    throw new Error(err?.error?.message || "Erro na API");
+    let errMsg = "HTTP " + res.status;
+    try {
+      const err = await res.json();
+      errMsg = err?.error || err?.detail || err?.message || errMsg;
+    } catch(e) {}
+    throw new Error(errMsg);
   }
 
   const data = await res.json();
-  return data.choices?.[0]?.message?.content || "";
+  if (data.choices?.[0]?.message?.content) return data.choices[0].message.content;
+  if (data.content) return data.content;
+  throw new Error("Resposta vazia da API");
 }
 function parseJSON(txt) {
   try {
