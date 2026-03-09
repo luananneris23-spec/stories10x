@@ -740,39 +740,57 @@ function AIGerarPersonalizado({ userData, onAplicar, onClose }) {
     try {
       const sys=buildSystemPrompt(userData);
       const dispEscolhidos=MECANISMOS.filter(m=>dispSel.has(m.id)).map(m=>m.nome);
-      const prompt=`Gere uma sequência de stories PERSONALIZADA usando APENAS os dispositivos escolhidos pela usuária.
+      // Classifica dispositivos escolhidos por fase para orientar a IA
+      const FASE_DISP = {
+        abertura: ["Combustível Extra","Situação de Identificação","Desabafo","História com Gancho","Piada Interna","Pânico pelo Conteúdo","Ansiedade pela Abertura","Você Sabia","Nomes Esquisitos","Espetacularização","Micro Influência","Diário","Crítica","7 Erros"],
+        meio: ["Conversa Sem Privacidade","Dia do Hotseat","Desafio Curto com Promessa de Análise","Análise Fragmentada","Meta Coletiva","Identidade do Comunicador","Identidade do Produto","Identidade do Consumidor","Opinião de Quem Comprou","Cultura de Resultado","BI Apurado","Enquete com Curiosidade Real","Print Valioso","Você Sabia","Demonstração Curta","Resumo de Conteúdo Externo"],
+        acao: ["Abertura de Carrinho","Levante a Mão","Link Oculto","Psicologia Reversa","Identidade do Produto","Peça Compartilhamento","Ative a Notificação","Elemento Escondido","Tarja de Curiosidade","Presente Difícil","Indicação Pretensiosa"],
+        fechamento: ["Alerta para Voltar","Resumo","Peça Compartilhamento"]
+      };
+      const fase = (nome) => {
+        if (FASE_DISP.fechamento.includes(nome)) return 4;
+        if (FASE_DISP.acao.includes(nome)) return 3;
+        if (FASE_DISP.meio.includes(nome)) return 2;
+        return 1;
+      };
+      const dispOrdenados = [...dispEscolhidos].sort((a,b) => fase(a) - fase(b));
 
-DADOS:
+      const prompt=`Você vai criar uma sequência de stories com EXATAMENTE os dispositivos abaixo, nesta ordem específica.
+
+CONTEXTO:
 - Tipo: ${form.tipo}
-- Tema principal: ${form.tema}
+- Tema: ${form.tema}
 - Produto/Serviço: ${form.produto||"produto do usuário"}
 - Objetivo: ${form.objetivo||"gerar engajamento e vendas"}
 - Nicho: ${userData.nicho||"não informado"}
 
-DISPOSITIVOS ESCOLHIDOS (use APENAS estes, na ordem que fizer mais sentido narrativo):
-${dispEscolhidos.map((d,i)=>`${i+1}. ${d}`).join("\n")}
+ORDEM OBRIGATÓRIA DOS STORIES (respeite EXATAMENTE esta sequência):
+${dispOrdenados.map((d,i)=>`Story ${i+1}: ${d}`).join("\n")}
 
-REGRAS CRÍTICAS:
-1. Use SOMENTE os dispositivos listados acima — nenhum outro
-2. Cada dispositivo escolhido deve aparecer pelo menos uma vez na sequência
-3. O campo "ideia" é o roteiro COMPLETO pronto para postar — 2-4 frases na voz do criador
-4. 1º story DEVE ter CTA de engajamento (Inbox, Enquete ou Caixinha)
-5. Ordene os dispositivos de forma que a sequência tenha arco narrativo: gancho → conexão → valor → ação
-6. Adapte tudo ao nicho "${userData.nicho||"do usuário"}" e ao tema "${form.tema}"
+REGRAS DE ESCRITA:
+1. Escreva cada story na VOZ DO CRIADOR — 1ª pessoa, linguagem natural, 2-4 frases máximo
+2. Story 1 DEVE ter CTA de engajamento imediato (Enquete, Inbox ou Caixinha) — é o gancho que prende
+3. Cada story deve surgir naturalmente do anterior — o seguidor sente que é uma conversa contínua
+4. O campo "ideia" é o roteiro PRONTO PARA POSTAR — não descreva, escreva o texto
+5. Adapte 100% ao nicho "${userData.nicho||"do usuário"}" e ao tema "${form.tema}" — zero genérico
+6. Stories de VENDA (Abertura de Carrinho, Levante a Mão, Link Oculto) só funcionam porque os stories anteriores criaram contexto — escreva-os como consequência natural, não como anúncio
 
-Responda SOMENTE com JSON:
+REGRA DE OURO: A sequência deve ler como uma conversa que naturalmente chega numa venda — não como uma lista de dispositivos aplicados mecanicamente.
+
+Responda SOMENTE com JSON válido:
 {
-  "nome": "nome criativo para a sequência baseado no tema",
+  "nome": "nome criativo e específico para esta sequência",
   "recados": [
     {
-      "mec": "nome exato do dispositivo",
+      "mec": "nome exato do dispositivo conforme lista acima",
       "cta": "um dos CTAs válidos",
-      "ideia": "roteiro completo, voz do criador, pronto para postar"
+      "ideia": "texto completo pronto para postar, voz do criador, 2-4 frases"
     }
   ]
 }
 
-CTAs válidos: ${CTAS.join(", ")}`;
+CTAs válidos: ${CTAS.join(", ")}
+Número de recados esperado: ${dispOrdenados.length}`;
 
       const txt=await callAI(sys,prompt,userData.userId);
       const data=parseJSON(txt);
