@@ -83,15 +83,17 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: finalMessages,
-        max_tokens: 5000,
+        max_tokens: 2500,
       }),
     });
 
     const data = await response.json();
 
     if (!response.ok) {
+      console.error("OpenAI error:", JSON.stringify(data));
       return res.status(response.status).json({
-        error: data?.error?.message || "Erro na OpenAI",
+        error: data?.error?.message || data?.error?.code || "Erro na OpenAI: " + response.status,
+        detail: JSON.stringify(data?.error || data)
       });
     }
 
