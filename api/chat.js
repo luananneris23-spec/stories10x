@@ -43,7 +43,7 @@ export default async function handler(req, res) {
           .update({ first_call_at: now, calls_used: 1 })
           .eq("user_id", user_id);
       } else {
-        if (usageData.calls_used >= 60) {
+        if (usageData.calls_used >= 200) {
           return res.status(403).json({
             error: "Você atingiu o limite de 60 gerações. Aguarde o próximo ciclo de 30 dias.",
           });
@@ -83,7 +83,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         model: "gpt-4o-mini",
         messages: finalMessages,
-        max_tokens: 2500,
+        max_tokens: 5000,
       }),
     });
 
