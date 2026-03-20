@@ -5,7 +5,7 @@ const ADMIN_PWD = "admin@stv2024";
 
 // ─── DADOS ───────────────────────────────────────────────────────────────────
 const MECANISMOS = [
-  { id:1 , nome:"Combustível Extra                     ", cat:"engajamento", desc:"Criar uma estratégia para mandar mensagem no WhatsApp ou no Direct gerando interesse em acessar os stories para participar de algo que está acontecendo ali — ganhar algo, aprender algo, participar de algo exclusivo.", ex:"Manda mensagem no Direct/WhatsApp: 'Tô fazendo algo especial nos stories agora, corre lá!'" },
+  { id:1 , nome:"Combustível Extra                     ", cat:"engajamento", desc:"AÇÃO EXTERNA — não é um story. É mandar mensagem no WhatsApp/Direct/grupo ANTES da sequência para trazer audiência para os stories. Crie um motivo real: ganhar algo, aprender algo, participar de algo exclusivo.", ex:"Manda mensagem no Direct/WhatsApp: 'Tô fazendo algo especial nos stories agora, corre lá!'" },
   { id:2 , nome:"Desafio Curto com Promessa de Análise ", cat:"engajamento", desc:"Propor um desafio curto dentro da necessidade do nicho — mandar uma foto, o perfil, como faz a prospecção — prometendo análise. Incentiva interação por inbox e na caixinha.", ex:"Me manda uma foto do seu produto que eu analiso ao vivo nos stories." },
   { id:3 , nome:"Conversa Sem Privacidade              ", cat:"engajamento", desc:"Mostrar trecho estratégico de conversa do inbox nos stories com intenção de gerar mais engajamento — quebrar objeções, gerar identificação, gerar desejo, gerar curiosidade, etc.", ex:"Tirar print de uma conversa do inbox que quebra uma objeção comum e postar com comentário." },
   { id:4 , nome:"Dia do Hotseat                        ", cat:"engajamento", desc:"Colocar a audiência na cadeira de mentor: um desafio real é compartilhado e o público manda feedbacks, ideias e perspectivas para resolver o problema. Focado em colaboração, troca de experiências e aprendizado rápido.", ex:"Compartilha um desafio real seu ou de alguém e pede: 'O que você faria nessa situação? Me manda sua perspectiva.'" },
@@ -743,7 +743,7 @@ function AIGerarPersonalizado({ userData, onAplicar, onClose }) {
       const dispEscolhidos=MECANISMOS.filter(m=>dispSel.has(m.id)).map(m=>m.nome);
       // Classifica dispositivos escolhidos por fase para orientar a IA
       const FASE_DISP = {
-        abertura: ["Combustível Extra","Situação de Identificação","Desabafo","História com Gancho","Piada Interna","Pânico pelo Conteúdo","Ansiedade pela Abertura","Você Sabia","Nomes Esquisitos","Espetacularização","Micro Influência","Diário","Crítica","7 Erros"],
+        abertura: ["Desabafo","História com Gancho","Piada Interna","Pânico pelo Conteúdo","Você Sabia","Nomes Esquisitos","Espetacularização","Micro Influência","Diário","Crítica","7 Erros","Enquete com Curiosidade Real","BI Apurado"],
         meio: ["Conversa Sem Privacidade","Dia do Hotseat","Desafio Curto com Promessa de Análise","Análise Fragmentada","Meta Coletiva","Identidade do Comunicador","Identidade do Produto","Identidade do Consumidor","Opinião de Quem Comprou","Cultura de Resultado","BI Apurado","Enquete com Curiosidade Real","Print Valioso","Você Sabia","Demonstração Curta","Resumo de Conteúdo Externo"],
         acao: ["Abertura de Carrinho","Levante a Mão","Link Oculto","Psicologia Reversa","Identidade do Produto","Peça Compartilhamento","Ative a Notificação","Elemento Escondido","Tarja de Curiosidade","Presente Difícil","Indicação Pretensiosa"],
         fechamento: ["Alerta para Voltar","Resumo","Peça Compartilhamento"]
