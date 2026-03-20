@@ -62,7 +62,8 @@ OS 38 DISPOSITIVOS DE ENGENHARIA SOCIAL
 Cada dispositivo é uma engrenagem que ativa um comportamento humano específico. Use-os com intenção — não como checklist.
 
 1. COMBUSTÍVEL EXTRA
-Criar uma estratégia para mandar mensagem no WhatsApp ou no Direct gerando interesse em acessar os Stories para participar de algo que está acontecendo ali — ganhar algo, aprender algo, participar de algo exclusivo. Não é só "vai lá no Stories" — é criar um motivo real e atrativo para a pessoa largar o que está fazendo e ir.
+⚠️ ATENÇÃO: Combustível Extra NÃO é um story. É uma ação feita FORA e ANTES dos stories — mandar mensagem no WhatsApp, no Direct, no email ou no grupo para trazer audiência de outro lugar para a sequência que está acontecendo nos stories agora. O objetivo é criar um motivo real e atrativo (ganhar algo, aprender algo, participar de algo exclusivo) para a pessoa largar o que está fazendo e ir para os stories. NUNCA coloque Combustível Extra como um story da sequência — ele é a estratégia de tráfego que alimenta a sequência.
+ATENÇÃO: Este mecanismo é uma ação FORA dos stories (mensagem no WhatsApp ou Direct). Nunca escreva um story com o texto "me manda uma pergunta na caixinha" e chame isso de Combustível Extra. O Combustível Extra é a mensagem enviada antes, em outro canal, para trazer a pessoa até os stories.
 
 2. DESAFIO CURTO COM PROMESSA DE ANÁLISE
 Propor um desafio curto dentro da necessidade do nicho — mandar uma foto, o perfil, como faz a prospecção, um texto — prometendo análise. Incentiva interação por inbox e na caixinha. O desafio precisa ser fácil o suficiente para a pessoa embarcar, mas específico o suficiente para gerar material valioso.
@@ -179,10 +180,13 @@ Fazer triagem no público para achar os mais prontos para comprar, oferecendo um
 COMO ESCREVER ROTEIROS QUE FUNCIONAM
 ════════════════════════════════════════
 
-PRINCÍPIO 1 — IDENTIFICAÇÃO PRIMEIRO:
-O primeiro story deve fazer a pessoa parar e pensar "esse sou eu".
+PRINCÍPIO 1 — COMEÇAR COM CONEXÃO:
+O primeiro story deve fazer a pessoa parar e pensar "esse sou eu" — use Desabafo, Crítica, Você Sabia, Enquete com Curiosidade Real, Diário ou Piada Interna para abrir com impacto.
 RUIM: "Hoje vou falar sobre produtividade."
-BOM: "Esse ano bati meu recorde: comprei 8 cursos e não fiz nenhum. Já aconteceu com você? [Sim / Não]"
+BOM (Desabafo): "Odeio admitir isso, mas passei 3 horas reorganizando pastas no computador em vez de trabalhar. Você também faz isso? Me conta."
+BOM (Crítica): "Essa coisa de 'acorda cedo e vai trabalhar' me irrita. Como se todo mundo que não tem resultado fosse preguiçoso. Você concorda ou discorda? [Concordo / Discordo]"
+BOM (Você Sabia): "Você sabia que 78% das pessoas que ganham mais continuam sem dinheiro? Faz sentido pra você? [Faz / Não faz]"
+BOM (Enquete com Curiosidade Real): "Você consegue separar pelo menos 30 minutos por dia só pra você? [Consigo / Raramente / Nunca]"  "
 
 PRINCÍPIO 2 — VOZ AUTÊNTICA:
 Escreva como a pessoa fala, não como artigo. Curto, direto, com personalidade do criador.
@@ -211,14 +215,17 @@ ESTRUTURA DE SEQUÊNCIA POR POSIÇÃO
 STORIES 1-3 — ENGAJAMENTO FORTE:
 Objetivo: prender atenção, gerar interação imediata
 CTA obrigatório no story 1: Inbox, Enquete ou Caixinha
-Exemplos story 1:
-- Infoproduto: "Esse ano bati meu recorde: comprei 8 cursos e não fiz nenhum. Você também? [Sim / Não]"
-- Emagrecimento: "Segunda-feira de novo. Juro que hoje começo. Alguém mais tem esse ciclo? Me conta."
-- Financeiro: "78% das pessoas que ganham mais continuam sem dinheiro. Faz sentido pra você? [Faz / Não faz]"
+O story 1 precisa prender a atenção imediatamente — use Desabafo, Pânico pelo Conteúdo, Você Sabia, Enquete com Curiosidade Real, BI Apurado ou Diário. Fale algo que faça a pessoa parar e pensar "isso é sobre mim" ou "preciso saber o que vem depois."
+Exemplos de abertura por mecanismo:
+- Desabafo (moda): "Sabe aquele dia que você olha pro guarda-roupa cheio e sente que não tem nada pra usar? Me conta se você também passa por isso. [Sim / Também eu]"
+- Pânico pelo Conteúdo (financeiro): "Hoje às 20h vou revelar o erro que faz a maioria das empreendedoras perder dinheiro sem perceber. Ativa a notificação."
+- Você Sabia (maternidade): "Você sabia que mães que trabalham em casa têm 40% mais dificuldade de desligar do trabalho do que quem vai a um escritório? Me conta se faz sentido pra você."
+- BI Apurado (saúde): "Qual é o seu maior desafio agora? (A) Falta de tempo / (B) Falta de motivação / (C) Não saber por onde começar — vou responder cada perfil."
 
 STORIES 4-7 — CONEXÃO E HISTÓRIA:
 Objetivo: criar vínculo emocional, fazer a audiência contar a história dela
-Tom: vulnerabilidade + identificação + desdobramento
+Tom: vulnerabilidade + conexão emocional + desdobramento (use Desabafo, Diário, História com Gancho)
+Use: Desabafo, História com Gancho, Conversa Sem Privacidade, Diário, Piada Interna
 O seguidor começa a mandar inbox espontaneamente aqui
 
 STORIES 8-12 — CONTEÚDO + PROVA SOCIAL:
